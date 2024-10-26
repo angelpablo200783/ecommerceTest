@@ -1,0 +1,30 @@
+
+.product-title {
+    padding: 50px;
+    font-family: "Sacramento", cursive;
+    font-size: 5rem; 
+    margin: 10px 0;
+    color: rgb(82, 82, 82);
+    text-align: center;
+}
+
+.product-card h3 {
+    font-family: "Sacramento", cursive !important;
+    font-size: 3rem !important;
+    margin: 0 !important; 
+    padding-top: 25px !important;
+}
+
+.product-list h3 {
+    font-size: 2rem;
+    color: rgb(82, 82, 82);
+    text-align: center;
+    padding: 15px;
+}
+ 
+.product-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.5s;
+    background-color: rgba(254, 220, 255, 0.425);
+}
+ 

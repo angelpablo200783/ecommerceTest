@@ -1,0 +1,141 @@
+/*.category-row {
+    background-image: url('../images/1.png'); 
+    background-size: cover;
+    background-position: center;
+    height: 20vh; 
+    width: auto;
+    color: rgb(255, 255, 255); 
+    border-radius: 50px;
+  }  
+*/
+
+  
+
+.category-filtro { 
+    display: flex;  
+    justify-content: center;
+    align-items: center; 
+    border-radius: 30px;
+    margin: 30px 0;   
+    /*height: 20vh; */ /* O ajusta según el contenido */
+    width: auto;
+    color: rgb(129, 129, 129); /* Cambia el color del texto si lo necesitas */
+    border-radius: 50px;
+}
+
+.category-filtro__dropdown { 
+    text-align: center;
+    width: 150px;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    background-color: rgba(254, 220, 255, 0.425);
+    color: rgb(114, 114, 114); 
+    font-size: 1.1rem;
+    cursor: pointer; 
+    
+} 
+
+/* Show the desktop filters by default */
+.category-filtro__desktop {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Hide the mobile dropdown by default */
+.category-filtro__mobile {
+    display: none;
+}
+
+.product-category__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  .product-category__card {
+    padding: 10px; 
+    border-radius: 8px;
+    text-align: center; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-category__card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    display: block;
+  }
+
+  .product-title {
+    padding: 50px;
+    font-family: "Sacramento", cursive;
+    font-size: 5rem; 
+    margin: 10px 0;
+    color: rgb(82, 82, 82);
+    text-align: center;
+}
+
+.product-category__card h3 {
+    font-family: "Sacramento", cursive !important;
+    font-size: 3rem !important;
+    margin: 0 !important; 
+    padding-top: 25px !important;
+}
+
+.product-category__list h3 {
+    font-size: 2rem;
+    color: rgb(82, 82, 82);
+    text-align: center;
+    padding: 15px;
+}
+
+.product-category__list a {
+    text-decoration: none;
+    color: rgb(82, 82, 82);
+}
+ 
+.product-category__card:hover {
+    transform: scale(1.05);
+    transition: transform 0.5s;
+    background-color: rgba(254, 220, 255, 0.425);
+}
+
+/* On small screens (less than 768px), hide the individual <p> elements and show the dropdown */
+@media (max-width: 768px) {
+    .category-filtro__desktop {
+    }
+
+    .category-filtro__mobile {
+        display: block;
+    }
+}
+
+/* On small screens (less than 768px), hide the individual <p> elements and show the dropdown */
+@media (max-width: 430px) {
+    .category-filtro {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center; 
+        border-radius: 30px;
+        margin: 30px 0;   
+        /*height: 20vh; */ /* O ajusta según el contenido */
+        width: auto;
+        color: rgb(129, 129, 129); /* Cambia el color del texto si lo necesitas */
+        border-radius: 50px;
+    }
+    .category-filtro__desktop {  
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        margin: 30px 0;
+    }
+
+    .category-filtro__mobile {
+        display: block;
+    }
+}
