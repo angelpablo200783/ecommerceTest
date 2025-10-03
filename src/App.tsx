@@ -9,6 +9,7 @@ import ConsultarPedidosCliente from './pages/ConsultarPedidosCliente';
 import Admin from './pages/Admin';
 import SolicitarDevolucion from './pages/SolicitarDevolucion';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 const App = () => (
   <AuthProvider>
@@ -17,6 +18,7 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/category/:name" element={<CategoryPage />} />
         <Route path="/product-details/:id" element={<ProductDetails />} />
         <Route 

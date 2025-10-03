@@ -10,11 +10,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   console.log('ProtectedRoute - isAuthenticated:', isAuthenticated);
-
+ 
   if (!isAuthenticated) {
     console.log('Redirigiendo a login...');
     return <Navigate to="/login" replace />;
-  }
+  } 
 
   console.log('Acceso permitido a ruta protegida');
   return <>{children}</>;

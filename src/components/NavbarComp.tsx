@@ -19,22 +19,25 @@ function NavbarComp() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav"> 
           <Nav className="ms-auto text-uppercase text-center">
-            <Nav.Link href="/">Inicio</Nav.Link> 
-            <Nav.Link eventKey={2} href="/category/:id">
+            <Nav.Link as={Link} to="/">Inicio</Nav.Link> 
+            <Nav.Link as={Link} to="/category/:id">
               Catalogo
             </Nav.Link>
             
             {!isAuthenticated ? (
-              <Nav.Link href="/login">Login</Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                <Nav.Link as={Link} to="/register">Registro</Nav.Link>
+              </>
             ) : (
               <>
-                <Nav.Link eventKey={1} href="/misDevoluciones">
+                <Nav.Link as={Link} to="/misDevoluciones">
                   Mis Devoluciones
                 </Nav.Link>
-                <Nav.Link eventKey={1} href="/misPedidos">
+                <Nav.Link as={Link} to="/misPedidos">
                   Mis Pedidos
                 </Nav.Link>
-                <Nav.Link eventKey={2} href="/admin">
+                <Nav.Link as={Link} to="/admin">
                   Admin
                 </Nav.Link>
                 <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }}>

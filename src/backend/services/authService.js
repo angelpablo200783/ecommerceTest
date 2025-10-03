@@ -24,6 +24,17 @@ class AuthService {
     }
   }
 
+  // Crear nuevo usuario
+  async createUser(userData) {
+    try {
+      const user = await Persona.create(userData);
+      return user;
+    } catch (error) {
+      console.error('Error al crear usuario:', error);
+      throw new Error('Error al crear usuario');
+    }
+  }
+
   // Verificar contraseña
   async verifyPassword(plainPassword, hashedPassword) {
     try {
