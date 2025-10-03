@@ -3,45 +3,47 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { syncModels } from './models/index.js';
 import authRoutes from './routes/authRoutes.js';
+import productoRoutes from './routes/productoRoutes.js';
+import metodoPagoRoutes from './routes/metodoPagoRoutes.js';
+import direccionRoutes from './routes/direccionRoutes.js';
+import pedidoRoutes from './routes/pedidoRoutes.js';
 
-// Cargar variables de entorno
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Configuración de CORS
+const corsOptions = {
+  origin: 'http://localhost:5173', // URL del frontend
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
 // Middleware
-app.use(cors({
-  origin: 'http://localhost:5173',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Rutas
 app.use('/api/auth', authRoutes);
+app.use('/api/productos', productoRoutes);
+app.use('/api/metodos-pago', metodoPagoRoutes);
+app.use('/api/direcciones', direccionRoutes);
+app.use('/api/pedidos', pedidoRoutes);
 
 // Ruta de prueba
-app.get('/api/health', (req, res) => {
-  res.json({ message: 'Servidor funcionando correctamente' });
+app.get('/', (req, res) => {
+  res.json({ message: 'API del ecommerce funcionando correctamente' });
 });
 
-// Inicializar la aplicación
-const startApp = async () => {
-  try {
-    // Sincronizar modelos
-    await syncModels();
-    
-    // Iniciar servidor
-    app.listen(PORT, () => {
-      console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error('Error al iniciar la aplicación:', error);
-    process.exit(1);
-  }
-};
+// Inicializar base de datos
+syncModels();
 
-startApp();
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log(`API disponible en http://localhost:${PORT}`);
+});
 
 export default app;

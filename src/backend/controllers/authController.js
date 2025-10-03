@@ -10,8 +10,6 @@ class AuthController {
   ];
 
   // Validaciones para el registro
-
-  /*
   static registerValidation = [
     body('nombre').isLength({ min: 2 }).withMessage('El nombre debe tener al menos 2 caracteres'),
     body('apellido').isLength({ min: 2 }).withMessage('El apellido debe tener al menos 2 caracteres'),
@@ -19,7 +17,76 @@ class AuthController {
     body('password').isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres'),
     body('telefono').optional().isLength({ min: 10 }).withMessage('El teléfono debe tener al menos 10 dígitos')
   ];
-  */
+
+  // Validaciones para crear administrador
+  static adminValidation = [
+    body('nombre').isLength({ min: 2 }).withMessage('El nombre debe tener al menos 2 caracteres'),
+    body('apellido').isLength({ min: 2 }).withMessage('El apellido debe tener al menos 2 caracteres'),
+    body('email').isEmail().normalizeEmail().withMessage('Debe ser un email válido'),
+    body('password').isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres'),
+    body('telefono').optional().isLength({ min: 10 }).withMessage('El teléfono debe tener al menos 10 dígitos'),
+    body('departamento').optional().isLength({ min: 2 }).withMessage('El departamento debe tener al menos 2 caracteres'),
+    body('nivelAcceso').optional().isInt({ min: 1 }).withMessage('El nivel de acceso debe ser un número entero mayor a 0')
+  ];
+
+  // POST /api/auth/create-admin
+  static async createAdmin(req, res) {
+    try {
+      console.log('=== CREAR ADMINISTRADOR ===');
+      console.log('Datos recibidos:', req.body);
+
+      // Verificar errores de validación
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        console.log('Errores de validación:', errors.array());
+        return res.status(400).json({ 
+          message: 'Datos inválidos', 
+          errors: errors.array() 
+        });
+      }
+
+      const { nombre, apellido, email, password, telefono, departamento, nivelAcceso } = req.body;
+      console.log('Verificando si el email ya existe:', email);
+
+      // Verificar si el email ya existe en persona o administrador
+      const existingUser = await authService.findByEmail(email);
+      const existingAdmin = await authService.findAdminByEmail(email);
+      
+      if (existingUser || existingAdmin) {
+        console.log('Email ya existe');
+        return res.status(400).json({ message: 'El email ya está registrado' });
+      }
+
+      console.log('Creando administrador...');
+      // Crear nuevo administrador
+      const newAdmin = await authService.createAdmin({
+        nombre,
+        apellido,
+        email,
+        password,
+        telefono: telefono || null
+      }, departamento || 'General', nivelAcceso || 1);
+
+      console.log('Administrador creado exitosamente');
+      res.status(201).json({
+        message: 'Administrador creado exitosamente',
+        user: {
+          id: newAdmin.idAdministrador,
+          nombre: newAdmin.nombre,
+          apellido: newAdmin.apellido,
+          email: newAdmin.email,
+          telefono: newAdmin.telefono,
+          role: 'admin'
+        }
+      });
+
+    } catch (error) {
+      console.error('=== ERROR AL CREAR ADMINISTRADOR ===');
+      console.error('Error completo:', error);
+      console.error('Stack trace:', error.stack);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  }
 
   // POST /api/auth/register
   static async register(req, res) {
@@ -42,7 +109,9 @@ class AuthController {
 
       // Verificar si el usuario ya existe
       const existingUser = await authService.findByEmail(email);
-      if (existingUser) {
+      const existingAdmin = await authService.findAdminByEmail(email);
+      
+      if (existingUser || existingAdmin) {
         console.log('Usuario ya existe');
         return res.status(400).json({ message: 'El email ya está registrado' });
       }
@@ -52,7 +121,7 @@ class AuthController {
       const hashedPassword = await authService.hashPassword(password);
 
       console.log('Creando usuario...');
-      // Crear nuevo usuario
+      // Crear nuevo usuario (cliente por defecto)
       const newUser = await authService.createUser({
         nombre,
         apellido,
@@ -74,7 +143,8 @@ class AuthController {
           nombre: newUser.nombre,
           apellido: newUser.apellido,
           email: newUser.email,
-          telefono: newUser.telefono
+          telefono: newUser.telefono,
+          role: 'cliente'
         }
       });
 
@@ -105,8 +175,16 @@ class AuthController {
       const { email, password } = req.body;
       console.log('Buscando usuario con email:', email);
 
-      // Buscar usuario por email
-      const foundUser = await authService.findByEmail(email);
+      // Buscar primero en administradores
+      let foundUser = await authService.findAdminByEmail(email);
+      let userRole = 'admin';
+      
+      // Si no es administrador, buscar en usuarios normales
+      if (!foundUser) {
+        foundUser = await authService.findByEmail(email);
+        userRole = 'cliente';
+      }
+      
       console.log('Usuario encontrado:', foundUser ? 'Sí' : 'No');
       
       if (!foundUser) {
@@ -115,8 +193,17 @@ class AuthController {
       }
 
       console.log('Verificando contraseña...');
-      // Verificar contraseña 
-      const isValidPassword = await authService.verifyPassword(password, foundUser.password);
+      // Verificar contraseña según el tipo de usuario
+      let isValidPassword = false;
+      
+      if (userRole === 'admin') {
+        // Para administradores: contraseña en texto plano
+        isValidPassword = await authService.verifyAdminPassword(password, foundUser.password);
+      } else {
+        // Para usuarios normales: contraseña encriptada
+        isValidPassword = await authService.verifyPassword(password, foundUser.password);
+      }
+      
       console.log('Contraseña válida:', isValidPassword);
       
       if (!isValidPassword) {
@@ -133,11 +220,12 @@ class AuthController {
         message: 'Login exitoso',
         token,
         user: {
-          id: foundUser.idPersona,
+          id: foundUser.idPersona || foundUser.idAdministrador,
           nombre: foundUser.nombre,
           apellido: foundUser.apellido,
           email: foundUser.email,
-          telefono: foundUser.telefono
+          telefono: foundUser.telefono,
+          role: userRole
         }
       });
 

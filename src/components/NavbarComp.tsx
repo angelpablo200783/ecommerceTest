@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 function NavbarComp() {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, logout, isAdmin } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -20,14 +20,23 @@ function NavbarComp() {
         <Navbar.Collapse id="responsive-navbar-nav"> 
           <Nav className="ms-auto text-uppercase text-center">
             <Nav.Link as={Link} to="/">Inicio</Nav.Link> 
-            <Nav.Link as={Link} to="/category/:id">
-              Catalogo
+            <Nav.Link as={Link} to="/category/productos">
+              Catálogo
             </Nav.Link>
             
             {!isAuthenticated ? (
               <>
                 <Nav.Link as={Link} to="/login">Login</Nav.Link>
                 <Nav.Link as={Link} to="/register">Registro</Nav.Link>
+              </>
+            ) : isAdmin ? (
+              <>
+                <Nav.Link as={Link} to="/admin-settings">
+                  Admin Settings
+                </Nav.Link>
+                <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                  Logout
+                </Nav.Link>
               </>
             ) : (
               <>
@@ -36,9 +45,6 @@ function NavbarComp() {
                 </Nav.Link>
                 <Nav.Link as={Link} to="/misPedidos">
                   Mis Pedidos
-                </Nav.Link>
-                <Nav.Link as={Link} to="/admin">
-                  Admin
                 </Nav.Link>
                 <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }}>
                   Logout

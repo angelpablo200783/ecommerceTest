@@ -10,6 +10,7 @@ import Admin from './pages/Admin';
 import SolicitarDevolucion from './pages/SolicitarDevolucion';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AdminSettings from './pages/AdminSettings';
 
 const App = () => (
   <AuthProvider>
@@ -34,6 +35,14 @@ const App = () => (
           element={
             <ProtectedRoute>
               <Admin />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin-settings" 
+          element={
+            <ProtectedRoute>
+              <AdminSettings />
             </ProtectedRoute>
           } 
         />

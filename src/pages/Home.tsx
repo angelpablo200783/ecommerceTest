@@ -1,7 +1,7 @@
 import { Button, Col, Container, Nav, Row } from 'react-bootstrap';
 import '../styles/Home.css';  
 import Product from './Product';
-
+import { Link } from 'react-router-dom';
 
 const Home = () => { 
 
@@ -16,8 +16,8 @@ const Home = () => {
             <h1 className="home-title">GamesX</h1>
             <h4 className="home-subtitle">Tus videojuegos favoritos en un solo lugar</h4>
             <Button variant='dark'> 
-              <Nav.Link eventKey={2} href="/category/:id">
-                Catalogo
+              <Nav.Link as={Link} to="/category/productos">
+                Catálogo
               </Nav.Link>
             </Button> 
           </Col>
