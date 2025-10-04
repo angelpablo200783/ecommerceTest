@@ -13,7 +13,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
  
   if (!isAuthenticated) {
     console.log('Redirigiendo a login...');
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   } 
 
   console.log('Acceso permitido a ruta protegida');

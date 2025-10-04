@@ -7,6 +7,7 @@ import productoRoutes from './routes/productoRoutes.js';
 import metodoPagoRoutes from './routes/metodoPagoRoutes.js';
 import direccionRoutes from './routes/direccionRoutes.js';
 import pedidoRoutes from './routes/pedidoRoutes.js';
+import { authenticateToken } from './middleware/auth.js';
 
 dotenv.config();
 
