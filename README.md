@@ -1,6 +1,6 @@
 # EcommerceTest
 
-Aplicación de pedidos y ventas en línea desarrollada con **React** (frontend) y **Node.js/Express** (backend), conectada a la base de datos **MySQL** y **Sequalize** como ORM.
+Aplicación de pedidos y ventas en línea desarrollada con **React** (frontend) y **Node.js/Express** (backend), conectada a la base de datos **MySQL** y **Sequelize** como ORM.
 
 ## Características principales
 
