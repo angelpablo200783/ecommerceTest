@@ -128,4 +128,4 @@ npm run test
 
 - Asegurarse de que la base de datos esté corriendo antes de iniciar el backend.
 - Se deben modificar las variables de entorno en `.env` para personalizar la configuración.
-- El proyecto utiliza Vite para el frontend y NodeJS/Express para el backend y Sequalize como ORM.
+- El proyecto utiliza Vite para el frontend y NodeJS/Express para el backend y Sequelize como ORM.
