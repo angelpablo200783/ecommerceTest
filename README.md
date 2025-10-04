@@ -1,6 +1,6 @@
 # EcommerceTest
 
-Aplicación de pedidos y ventas en línea desarrollada con **React** (frontend) y **Node.js/Express** (backend), conectada a la base de datos **MySQL**.
+Aplicación de pedidos y ventas en línea desarrollada con **React** (frontend) y **Node.js/Express** (backend), conectada a la base de datos **MySQL** y **Sequalize** como ORM.
 
 ## Características principales
 
@@ -127,5 +127,5 @@ npm run test
 ## Notas
 
 - Asegurarse de que la base de datos esté corriendo antes de iniciar el backend.
-- Puedes modificar las variables de entorno en `.env` para personalizar la configuración.
-- El proyecto utiliza Vite para el frontend y NodeJS/Express para el backend.
+- Se deben modificar las variables de entorno en `.env` para personalizar la configuración.
+- El proyecto utiliza Vite para el frontend y NodeJS/Express para el backend y Sequalize como ORM.
