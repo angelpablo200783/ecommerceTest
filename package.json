@@ -14,30 +14,13 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "preset": "@babel/preset-env",
     "transform": {
       "^.+\\.js$": "babel-jest"
     },
-    "extensionsToTreatAsEsm": [".js"],
-    "globals": {
-      "ts-jest": {
-        "useESM": true
-      }
-    },
     "setupFilesAfterEnv": ["<rootDir>/src/backend/tests/setup.js"],
-    "collectCoverageFrom": [
-      "src/backend/**/*.js",
-      "!src/backend/server.js",
-      "!src/backend/tests/**"
-    ],
-    "coverageDirectory": "coverage",
-    "coverageReporters": ["text", "lcov", "html"],
     "testMatch": [
       "**/tests/**/*.test.js"
-    ],
-    "moduleNameMapping": {
-      "^(\\.{1,2}/.*)\\.js$": "$1"
-    }
+    ]
   },
   "dependencies": {
     "axios": "^1.7.7",

@@ -22,6 +22,9 @@ const AdminSettings: React.FC = () => {
   const [success, setSuccess] = useState<string>('');
   const [imagePreview, setImagePreview] = useState<string>('');
 
+  console.log('User info:', user);
+  console.log('Is Admin:', isAdmin);
+
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
@@ -54,6 +57,7 @@ const AdminSettings: React.FC = () => {
       }
     } catch (error) {
       setError('Error de conexión');
+      console.log(error);
     }
   };
 
@@ -129,6 +133,7 @@ const AdminSettings: React.FC = () => {
       }
     } catch (error) {
       setError('Error de conexión');
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -163,6 +168,7 @@ const AdminSettings: React.FC = () => {
         }
       } catch (error) {
         setError('Error de conexión');
+        console.log(error);
       }
     }
   };

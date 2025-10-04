@@ -36,6 +36,7 @@ function Product() {
                 setError('Error al cargar productos');
             }
         } catch (error) {
+            console.log(error);
             setError('Error de conexión');
         } finally {
             setLoading(false);

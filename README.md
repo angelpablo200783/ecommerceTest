@@ -13,10 +13,10 @@ Aplicación de pedidos y ventas en línea desarrollada con **React** (frontend) 
 
 ---
 
-## Requisitos previos
+## Requisitos  
 
-- Node.js (v18+ recomendado)
-- npm o yarn
+- Node.js  
+- npm 
 - MySQL Server
 
 ---
@@ -49,14 +49,6 @@ DB_USER=root
 DB_PASSWORD=12345678Spring
 DB_NAME=tienda_en_linea
 PORT=3000
-```
-
-### 4. Ejecuta las migraciones (si usas Sequelize)
-
-```bash
-# Si tienes scripts de migración, ejecútalos aquí
-# Por ejemplo:
-# npx sequelize-cli db:migrate
 ```
 
 ---
@@ -134,6 +126,6 @@ npm run test
 
 ## Notas
 
-- Asegúrate de que la base de datos esté corriendo antes de iniciar el backend.
+- Asegurarse de que la base de datos esté corriendo antes de iniciar el backend.
 - Puedes modificar las variables de entorno en `.env` para personalizar la configuración.
-- El proyecto utiliza Vite para el frontend y Express para el backend.
+- El proyecto utiliza Vite para el frontend y NodeJS/Express para el backend.
