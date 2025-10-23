@@ -7,14 +7,16 @@ const Cliente = sequelize.define('Cliente', {
     primaryKey: true,
     autoIncrement: true
   },
-  idPersona: {
+  /*
+  idCliente: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'persona',
-      key: 'idPersona'
+      model: 'cliente',
+      key: 'idCliente'
     }
   },
+  */
   fechaDeRegistro: {
     type: DataTypes.DATE,
     allowNull: false,
