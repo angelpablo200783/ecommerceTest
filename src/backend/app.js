@@ -7,12 +7,15 @@ import productoRoutes from './routes/productoRoutes.js';
 import metodoPagoRoutes from './routes/metodoPagoRoutes.js';
 import direccionRoutes from './routes/direccionRoutes.js';
 import pedidoRoutes from './routes/pedidoRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js'; // Add this import
 import { authenticateToken } from './middleware/auth.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+//console.log('STRIPE_SECRET_KEY:', process.env.STRIPE_SECRET_KEY);
 
 // Configuración de CORS
 const corsOptions = {
@@ -32,6 +35,9 @@ app.use('/api/productos', productoRoutes);
 app.use('/api/metodos-pago', metodoPagoRoutes);
 app.use('/api/direcciones', direccionRoutes);
 app.use('/api/pedidos', pedidoRoutes);
+app.use('/api/payment', paymentRoutes);
+
+
 
 // Ruta de prueba
 app.get('/', (req, res) => {
