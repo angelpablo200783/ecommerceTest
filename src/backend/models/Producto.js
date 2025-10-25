@@ -32,7 +32,12 @@ const Producto = sequelize.define('Producto', {
   imagen: {
     type: DataTypes.TEXT('long'), // Para almacenar base64
     allowNull: true
+  },
+  categoria: {
+    type: DataTypes.STRING(50),
+    allowNull: true
   }
+
 }, {
   tableName: 'producto',
   timestamps: false

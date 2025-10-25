@@ -58,10 +58,11 @@ class AuthService {
       const user = await Persona.create(userData);
       
       // Crear registro de cliente por defecto
+ 
       await Cliente.create({
-        idPersona: user.idPersona,
+        idCliente: user.idPersona,
         fechaDeRegistro: new Date()
-      });
+      }); 
       
       return user;
     } catch (error) {

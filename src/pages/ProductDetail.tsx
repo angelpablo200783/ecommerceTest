@@ -9,6 +9,7 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 
 // Reemplaza con tu clave pública de Stripe (modo test) desde el Stripe Dashboard. Usa una clave válida real.
 const stripePromise = loadStripe('pk_test_51SL6D6Fzj5f4Br4CfQ9vftRiPerCpIA0oLfvv5CRVsLEm84FcAMX5aHjwseGoviUwcrb8XxP5UIJzVifbHlvusNE00JUC9dAiD');
+import { useCart } from '../contexts/CartContext';
 
 interface Producto {
   idProducto: number;
@@ -64,6 +65,7 @@ function InnerProductDetails() {
   const { isAuthenticated, user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
+  const { addToCart } = useCart();
 
   const [producto, setProducto] = useState<Producto | null>(null);
   const [loading, setLoading] = useState(true);
@@ -163,13 +165,24 @@ function InnerProductDetails() {
     setShowModal(true);
   };
 
-  const handleAgregarCarrito = () => {
-    if (!isAuthenticated) {
-      alert('Debes iniciar sesión para agregar al carrito');
-      return;
-    }
-    alert('Producto agregado al carrito');
-  };
+const handleAgregarCarrito = () => {
+  if (!isAuthenticated) {
+    alert('Debes iniciar sesión para agregar al carrito');
+    return;
+  }
+
+  if (!producto) return;
+
+  addToCart({
+    idProducto: producto.idProducto,
+    nombre: producto.nombre,
+    precio: producto.precio,
+    cantidad,
+    imagen: producto.imagen
+  });
+
+  alert('Producto agregado al carrito exitosamente');
+};
 
   const handleContinuarCompra = () => {
     if (!metodoPagoSeleccionado) {
