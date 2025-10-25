@@ -10,6 +10,7 @@ interface Producto {
   cantidadDisponible: number;
   enStock: boolean;
   imagen: string;
+  categoria: string;
 }
 
 const AdminSettings: React.FC = () => {
@@ -31,7 +32,8 @@ const AdminSettings: React.FC = () => {
     precio: '',
     cantidadDisponible: '',
     enStock: true,
-    imagen: ''
+    imagen: '',
+    categoria: ''
   });
 
   // Verificar si es admin
@@ -147,7 +149,8 @@ const AdminSettings: React.FC = () => {
       precio: producto.precio.toString(),
       cantidadDisponible: producto.cantidadDisponible.toString(),
       enStock: producto.enStock,
-      imagen: producto.imagen
+      imagen: producto.imagen,
+      categoria: producto.categoria
     });
     setImagePreview(producto.imagen || '');
     setShowModal(true);
@@ -182,7 +185,8 @@ const AdminSettings: React.FC = () => {
       precio: '',
       cantidadDisponible: '',
       enStock: true,
-      imagen: ''
+      imagen: '',
+      categoria: ''
     });
     setImagePreview('');
   };
@@ -217,6 +221,7 @@ const AdminSettings: React.FC = () => {
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>En Stock</th>
+                    <th>Categoria</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -245,6 +250,7 @@ const AdminSettings: React.FC = () => {
                       <td>${producto.precio}</td>
                       <td>{producto.cantidadDisponible}</td>
                       <td>{producto.enStock ? 'Sí' : 'No'}</td>
+                      <td>{producto.categoria}</td>
                       <td>
                         <Button 
                           variant="warning" 
@@ -316,6 +322,16 @@ const AdminSettings: React.FC = () => {
                 value={formData.descripcion}
                 onChange={handleInputChange}
                 rows={3}
+              />
+            </Form.Group>
+ 
+            <Form.Group className="mb-3">
+              <Form.Label>Categoría</Form.Label>
+              <Form.Control
+                type="text"
+                name="categoria"
+                value={formData.categoria}
+                onChange={handleInputChange}
               />
             </Form.Group>
 

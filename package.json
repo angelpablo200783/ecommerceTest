@@ -17,12 +17,16 @@
     "transform": {
       "^.+\\.js$": "babel-jest"
     },
-    "setupFilesAfterEnv": ["<rootDir>/src/backend/tests/setup.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/backend/tests/setup.js"
+    ],
     "testMatch": [
       "**/tests/**/*.test.js"
     ]
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^5.2.0",
+    "@stripe/stripe-js": "^8.1.0",
     "axios": "^1.7.7",
     "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.3",
@@ -37,7 +41,8 @@
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "stripe": "^19.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
