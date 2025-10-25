@@ -10,12 +10,43 @@ class ProductoController {
   ];
 
   // GET /api/productos
-  static async getAll(req, res) {
+/*   static async getAll(req, res) {
     try {
       const productos = await Producto.findAll();
       res.json(productos);
     } catch (error) {
       console.error('Error al obtener productos:', error);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  } */
+ static async getAll(req, res) {
+    try {
+        const { categoria } = req.query; 
+        const where = {};
+
+        if (categoria) {
+            where.categoria = categoria; 
+        }
+
+        const productos = await Producto.findAll({ where });
+        res.json(productos);
+
+        console.log(productos);
+        
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+}
+
+  //GET /api/productos/categoria/:categoria
+  static async getByCategoria(req, res) {
+    try {
+      const { categoria } = req.params;
+      const productos = await Producto.findAll({ where: { categoria } });
+      res.json(productos);
+    } catch (error) {
+      console.error(error);
       res.status(500).json({ message: 'Error interno del servidor' });
     }
   }
@@ -25,11 +56,11 @@ class ProductoController {
     try {
       const { id } = req.params;
       const producto = await Producto.findByPk(id);
-      
+
       if (!producto) {
         return res.status(404).json({ message: 'Producto no encontrado' });
       }
-      
+
       res.json(producto);
     } catch (error) {
       console.error('Error al obtener producto:', error);
@@ -42,9 +73,9 @@ class ProductoController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ 
-          message: 'Datos inválidos', 
-          errors: errors.array() 
+        return res.status(400).json({
+          message: 'Datos inválidos',
+          errors: errors.array()
         });
       }
 
@@ -61,11 +92,11 @@ class ProductoController {
     try {
       const { id } = req.params;
       const errors = validationResult(req);
-      
+
       if (!errors.isEmpty()) {
-        return res.status(400).json({ 
-          message: 'Datos inválidos', 
-          errors: errors.array() 
+        return res.status(400).json({
+          message: 'Datos inválidos',
+          errors: errors.array()
         });
       }
 

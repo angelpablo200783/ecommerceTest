@@ -6,6 +6,9 @@ const router = express.Router();
 // GET /api/productos
 router.get('/', ProductoController.getAll);
 
+//GET /api/productos/categoria/:categoria
+router.get('categoria/:categoria', ProductoController.getByCategoria);
+
 // GET /api/productos/:id
 router.get('/:id', ProductoController.getById);
 
