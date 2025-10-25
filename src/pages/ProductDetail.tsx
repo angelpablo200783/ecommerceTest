@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import '../styles/ProductDetails.css';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useCart } from '../contexts/CartContext';
 
 interface Producto {
   idProducto: number;
@@ -38,6 +39,7 @@ function ProductDetails() {
   const { pathname } = useLocation();
   const { id } = useParams();
   const { isAuthenticated, user } = useAuth();
+  const { addToCart } = useCart();
 
   const [producto, setProducto] = useState<Producto | null>(null);
   const [loading, setLoading] = useState(true);
@@ -130,14 +132,24 @@ function ProductDetails() {
     setShowModal(true);
   };
 
-  const handleAgregarCarrito = () => {
-    if (!isAuthenticated) {
-      alert('Debes iniciar sesión para agregar al carrito');
-      return;
-    }
-    // Aquí implementarías la lógica para agregar al carrito
-    alert('Producto agregado al carrito');
-  };
+const handleAgregarCarrito = () => {
+  if (!isAuthenticated) {
+    alert('Debes iniciar sesión para agregar al carrito');
+    return;
+  }
+
+  if (!producto) return;
+
+  addToCart({
+    idProducto: producto.idProducto,
+    nombre: producto.nombre,
+    precio: producto.precio,
+    cantidad,
+    imagen: producto.imagen
+  });
+
+  alert('Producto agregado al carrito exitosamente');
+};
 
   const handleContinuarCompra = () => {
     if (!metodoPagoSeleccionado) {
@@ -288,7 +300,7 @@ function ProductDetails() {
                 )}
               </div>
 
-              <h2 className="text-success mb-3">${producto.precio}</h2>
+              <h2 className="text-success mb-3">Q{producto.precio}</h2>
               
               <p className="text-muted mb-4">{producto.descripcion}</p>
 
@@ -335,7 +347,7 @@ function ProductDetails() {
               </div>
 
               <div className="mt-4">
-                <h5>Total: ${(producto.precio * cantidad).toFixed(2)}</h5>
+                <h5>Total: Q{(producto.precio * cantidad).toFixed(2)}</h5>
               </div>
             </Card.Body>
           </Card>
@@ -496,8 +508,8 @@ function ProductDetails() {
           <h5>Resumen del Pedido</h5>
           <p><strong>Producto:</strong> {producto.nombre}</p>
           <p><strong>Cantidad:</strong> {cantidad}</p>
-          <p><strong>Precio unitario:</strong> ${producto.precio}</p>
-          <p><strong>Total:</strong> ${(producto.precio * cantidad).toFixed(2)}</p>
+          <p><strong>Precio unitario:</strong> Q{producto.precio}</p>
+          <p><strong>Total:</strong> Q{(producto.precio * cantidad).toFixed(2)}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowConfirmationModal(false)}>

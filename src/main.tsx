@@ -4,12 +4,15 @@ import App from './App.tsx'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { Container } from 'react-bootstrap';
+import { CartProvider } from './contexts/CartContext';
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Container> 
-      <App />
-    </Container>
-  </StrictMode>,
-)
+    <CartProvider>
+      <Container>
+        <App />
+      </Container>
+    </CartProvider>
+  </StrictMode>
+);

@@ -40,6 +40,9 @@ function NavbarComp() {
               </>
             ) : (
               <>
+                <Nav.Link as={Link} to="/carrito">
+                  Carrito
+                </Nav.Link>
                 <Nav.Link as={Link} to="/misDevoluciones">
                   Mis Devoluciones
                 </Nav.Link>
